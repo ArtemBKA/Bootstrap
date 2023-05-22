@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.init;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -15,7 +16,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
-
+    @Autowired
     public CommandLineRunnerImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -34,8 +35,8 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
 
         // пользователи Admin  и User
-        User userAdmin = new User("Денис", "Леонтьев", "l1@mail.ru", "$2y$10$08fime4hWZ5TMO.JkPEmXuIwyBchRDIbR/5QqtOnDtXE1s1LV52De", adminRoles);
-        User userUser = new User("Ян", "Леонтьев", "l2@mail.ru", "$2y$10$GuP0CFLp71MpXFxHluKAy.t391.yfdkrTdSp6XRjvv2tnzGsTeH8O", userRoles);
+        User userAdmin = new User("admin", "admin", "admin", "$2a$12$YHwXzv/N/WIJpYZ9yC8jouXudVhB/jFaCSozv4x5WS3zXCOHfiuSW", adminRoles);
+        User userUser = new User("user", "user", "user", "$2a$12$H1tgeElq0QaiQoZiHbef6evRJjaIgL9Yc.zVxr7Ban9KRCnUrMwLO", userRoles);
         System.out.println(userAdmin);
         userRepository.save(userAdmin);
         System.out.println(userUser);
