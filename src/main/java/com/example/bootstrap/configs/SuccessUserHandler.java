@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.configs;
+package com.example.bootstrap.configs;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Component
 public class SuccessUserHandler implements AuthenticationSuccessHandler {
-    // Spring Security использует объект Authentication, пользователя авторизованной сессии.
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
@@ -21,6 +20,5 @@ public class SuccessUserHandler implements AuthenticationSuccessHandler {
         } else {
             httpServletResponse.sendRedirect("/user");
         }
-
     }
 }

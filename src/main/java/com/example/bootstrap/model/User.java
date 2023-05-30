@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.model;
+package com.example.bootstrap.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     private String password;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -40,7 +41,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, String last_name, String username, String password, Set<Role> roles) {
+    public User(String name, String last_name, String username, Integer age, String password, Set<Role> roles) {
         this.name = name;
         this.last_name = last_name;
         this.username = username;
@@ -59,52 +60,64 @@ public class User implements UserDetails {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getLast_name() {
         return last_name;
     }
+
     public void setLast_name(String last_name) {
         this.last_name = last_name;
     }
+
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public Set<Role> getRoles() {
         return roles;
     }
+
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
 
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
@@ -126,15 +139,13 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (last_name != null ? !last_name.equals(user.last_name) : user.last_name != null) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        return roles != null ? roles.equals(user.roles) : user.roles == null;
+        if (!Objects.equals(id, user.id)) return false;
+        if (!Objects.equals(name, user.name)) return false;
+        if (!Objects.equals(last_name, user.last_name)) return false;
+        if (!Objects.equals(username, user.username)) return false;
+        if (!Objects.equals(password, user.password)) return false;
+        return Objects.equals(roles, user.roles);
     }
 
     @Override

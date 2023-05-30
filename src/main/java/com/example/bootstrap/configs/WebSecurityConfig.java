@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.configs;
+package com.example.bootstrap.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ru.kata.spring.boot_security.demo.servise.UserServiceImpl;
+import com.example.bootstrap.service.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -35,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/", "/login").permitAll()
                 .antMatchers("/css/bootstrap.min.css", "/js/bootstrap.bundle.min.js").permitAll()
-                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")

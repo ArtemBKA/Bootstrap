@@ -1,9 +1,10 @@
-package ru.kata.spring.boot_security.demo.model;
+package com.example.bootstrap.model;
 
 
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 @Entity
 @Table(name = "roles")
@@ -15,7 +16,6 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "name", nullable = false, length = 45)
     private String name;
-
 
     @Transient
     @ManyToMany(mappedBy = "roles")
@@ -74,7 +74,7 @@ public class Role implements GrantedAuthority {
 
         Role role = (Role) o;
 
-        return name != null ? name.equals(role.name) : role.name == null;
+        return Objects.equals(name, role.name);
     }
 
     @Override

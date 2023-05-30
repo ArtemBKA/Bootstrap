@@ -1,12 +1,12 @@
-package ru.kata.spring.boot_security.demo.controller;
+package com.example.bootstrap.controller;
 
+import com.example.bootstrap.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.servise.UserService;
+import com.example.bootstrap.model.User;
 
 import java.security.Principal;
 

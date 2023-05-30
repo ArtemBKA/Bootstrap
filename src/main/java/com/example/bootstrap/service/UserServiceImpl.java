@@ -1,6 +1,8 @@
-package ru.kata.spring.boot_security.demo.servise;
+package com.example.bootstrap.service;
 
 
+import com.example.bootstrap.model.User;
+import com.example.bootstrap.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,13 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
@@ -28,7 +27,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
     @Override
     public List<User> getAllUsers() {
     return userRepository.findAll();
@@ -41,8 +39,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
-
-    @Transactional
     @Override
     public User getUser(Long id) {
         return userRepository.findById(id).get();
@@ -59,15 +55,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.delete(userRepository.findById(id).get());
     }
 
-    @Transactional
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-
-
-
-    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -77,5 +68,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPassword(), user.getAuthorities());
     }
-
 }
